@@ -7,32 +7,26 @@ export default function App() {
   const [firstNumber, setFirstNumber] = useState('');
   const [secondNumber, setSecondNumber] = useState('');
   const [result, setResult] = useState('');
-
-  const [text, setText] = useState('');
   const [data, setData] = useState([]); 
 
   const calcSum = () => {
-    const sum = Number(firstNumber) + Number(secondNumber);
-    setResult(sum);
-    setText(`${firstNumber} + ${secondNumber} = ${sum}`); 
-    setData([...data, {key: text}]); 
+    setResult(Number(firstNumber) + Number(secondNumber));
+    setData([...data, {key : `${firstNumber} + ${secondNumber} = ${Number(firstNumber) + Number(secondNumber)}`}]);
     setFirstNumber('');
     setSecondNumber(''); 
+    
   }
 
   const calcSubtraction = () => {
-    const subtraction = Number(firstNumber) - Number(secondNumber);
-    setResult(subtraction);  
-    setText(`${firstNumber} - ${secondNumber} = ${subtraction}`); 
-    setData([...data, {key: text}]); 
+    setResult(Number(firstNumber) - Number(secondNumber));
+    setData([...data, {key : `${firstNumber} - ${secondNumber} = ${Number(firstNumber) - Number(secondNumber)}`}]);
     setFirstNumber('');
     setSecondNumber(''); 
-    setText('');
   }
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text style={{fontSize: 20}}>Result: {result}</Text>
       <TextInput
         style={{width: 200, borderColor: 'gray', borderWidth: 1}}
         keyboardType='numeric'
@@ -46,19 +40,20 @@ export default function App() {
         value={secondNumber}
       />
       <View style={styles.buttonContainer}>
-        <Button onPress={calcSum} title='+'/>
+        <Button onPress={calcSum} title=' + '/>
         <View style={styles.space}/>
-        <Button onPress={calcSubtraction} title='-'/>
+        <Button onPress={calcSubtraction} title= ' - '/>
       </View>
-      <StatusBar style="auto" />
 
       <Text style={{marginTop: 30}}>History</Text>
       <FlatList
         data={data}
-        renderItem={({item}) => 
-          <Text>{item.key}</Text>
-        }
+        renderItem={({ item }) => <Text>{item.key}</Text>}
+        keyExtractor={(item, index) => index}
       />
+      
+      
+      <StatusBar style="auto" />
     </View>
   );
 }
